@@ -7,6 +7,10 @@ buildscript {
     }
 }
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+group = 'com.jenglert'
+version = '1.0.0'
 
 android {
 
@@ -23,7 +27,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 4
-        versionName "1.0"
+        versionName version
     }
     buildTypes {
         release {
@@ -48,4 +52,35 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:2.2.16"
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      repository(url: 'file://' + new File(rootDir.parentFile, 'MavenRepo').absolutePath)
+      snapshotRepository(url: 'file://' + new File(rootDir.parentFile, 'MavenRepo/snapshots').absolutePath)
+
+      pom.artifactId = 'rx2firebase'
+
+      pom.project {
+        name 'Rx2Firebase'
+        packaging 'aar'
+        description 'Rx2Firebase'
+        url 'https://github.com/jpenglert/Rx2Firebase'
+
+        scm {
+          url 'https://github.com/jpenglert/Rx2Firebase'
+          connection 'scm:git:git://github.com/jpenglert/Rx2Firebase.git'
+          developerConnection 'scm:git:ssh://git@github.com/jpenglert/Rx2Firebase.git'
+        }
+
+        developers {
+          developer {
+            id 'jpenglert'
+            name 'Jesse Englert'
+          }
+        }
+      }
+    }
+  }
 }
