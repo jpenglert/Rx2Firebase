@@ -81,6 +81,9 @@ public class RxFirebaseDatabaseTest {
       when(dataSnapshot.getValue(ChildData.class)).thenReturn(childData);
       when(dataSnapshot.getKey()).thenReturn(ANY_KEY);
       when(dataSnapshot.getChildren()).thenReturn(Arrays.asList(dataSnapshot));
+
+      when(dataSnapshotTwo.exists()).thenReturn(true);
+
       when(databaseReference.updateChildren(updatedData)).thenReturn(voidTask);
    }
 
@@ -116,7 +119,7 @@ public class RxFirebaseDatabaseTest {
       argument.getValue().onDataChange(mockFirebaseDataSnapshotNoData);
 
       testObserver.assertValueCount(0)
-         .assertNotComplete()
+         .assertComplete()
          .dispose();
    }
 

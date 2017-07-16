@@ -85,8 +85,12 @@ public class RxFirebaseDatabase {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(DataSnapshot dataSnapshot) {
-                  emitter.onSuccess(dataSnapshot);
-                  emitter.onComplete();
+                 if (dataSnapshot.exists()) {
+                   emitter.onSuccess(dataSnapshot);
+                 }
+                 else {
+                   emitter.onComplete();
+                 }
                }
 
                @Override
